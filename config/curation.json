@@ -1,0 +1,52 @@
+{
+  "_help": "Hand-picked touches for the site. Everything else (new videos, Shorts, views, subscribers) updates automatically every hour. See SETUP.md, section 'Changing what the site shows'.",
+
+  "videos": {
+    "DPbsrvvzfTY": { "title": "Gilbert Trail, Kasauli", "place": "Kasauli, Himachal Pradesh", "coords": "30.9°N 77.0°E" },
+    "X3i_87dcTHs": { "title": "Pratapgad Fort in 360°", "place": "Satara, Maharashtra", "coords": "17.9°N 73.6°E" },
+    "sKOoP9KhmZ4": { "title": "Timber Trail: Ropeway to the Clouds", "place": "Parwanoo, Himachal Pradesh", "coords": "30.8°N 77.0°E" },
+    "PY4vjXEi4A8": { "title": "Mumbai to Alibag via Mandwa", "place": "Alibag, Maharashtra", "coords": "18.8°N 72.9°E" },
+    "EjtjgcxsU5Y": { "title": "Asherigad Fort Monsoon Trek", "place": "Palghar, Maharashtra", "coords": "19.8°N 73.0°E" },
+    "rPaEIfC09bA": { "title": "Chandi Devi Temple by Ropeway", "place": "Haridwar, Uttarakhand", "coords": "29.9°N 78.2°E" },
+    "xwgYi83W7MY": { "title": "Harihar Fort: Don't Look Down", "place": "Nashik, Maharashtra", "coords": "19.9°N 73.5°E" },
+    "1xXkmiQl2IY": { "title": "Raigad Fort by Ropeway", "place": "Raigad, Maharashtra", "coords": "18.2°N 73.4°E" },
+    "wpIQpkKRtf0": { "title": "Inside Raj Bhavan, Mumbai", "place": "Malabar Hill, Mumbai", "coords": "18.9°N 72.8°E" },
+    "iI0kUsY3760": { "title": "Juhu vs Silver Beach at Sunset", "place": "Juhu, Mumbai", "coords": "19.1°N 72.8°E" },
+    "aYHlw_U63QA": { "title": "Mahalakshmi Temple, Dahanu", "place": "Dahanu, Maharashtra", "coords": "19.9°N 72.9°E" },
+    "uK5dxT29qHo": { "title": "Shirgaon vs Palghar Beach", "place": "Palghar, Maharashtra", "coords": "19.7°N 72.7°E" },
+    "r3KOslyPQT4": { "title": "Tungareshwar Mahadev Temple", "place": "Vasai, Maharashtra", "coords": "19.4°N 72.9°E" },
+    "-5WJ5T5i86E": { "title": "Meditation at Vashistha Gufa", "place": "Rishikesh, Uttarakhand", "coords": "30.1°N 78.4°E" },
+    "u5i4i_9uD8o": { "title": "Vajreshwari Temple Darshan", "place": "Vajreshwari, Maharashtra", "coords": "19.5°N 73.0°E" },
+    "8mG7mRqAHQU": { "title": "Agrasen ki Baoli: 108 Steps", "place": "New Delhi", "coords": "28.6°N 77.2°E" },
+    "E9bS5yDlkIA": { "title": "Jantar Mantar, Delhi", "place": "New Delhi", "coords": "28.6°N 77.2°E" },
+    "qWtcUo2_5vE": { "title": "Gorai Beach by Motorcycle", "place": "Gorai, Mumbai", "coords": "19.2°N 72.8°E" }
+  },
+
+  "shorts": {
+    "SySbs5Rg0uA": { "title": "Make it spectacular: Tiger Point, Lonavala" },
+    "iz8Rw5c21EI": { "title": "Let's go chasing sunsets" },
+    "cotDKmdKxFY": { "title": "How this audio got me 50K views" },
+    "Re4XjtfPRXE": { "title": "Dil Chahta Hai: a motorcycle diary" },
+    "Qs7heSjeQM4": { "title": "Moving to the sun: Juhu Beach vibes" },
+    "9ZeOkAKY7l4": { "title": "Raigad Ropeway: a 4-minute journey to glory" },
+    "EjIQNBdglqs": { "title": "Statue of Unity is taller than you think" },
+    "GrDZycQ66_8": { "title": "Cinematic Alibag on Insta360", "thumb": "oardefault" },
+    "L9SUtm6pDfw": { "title": "Let's go Alibag: camel ride on the beach" },
+    "X-i7iVPUdyc": { "title": "Let's walk towards the light" }
+  },
+
+  "hide": ["GLMXeCdEKag", "o-IA7bikEIw", "dlsqJSI5qgs", "mDQkGXdVz0w", "IP7Ue-oUpkA"],
+
+  "routes": [
+    { "id": "forts", "name": "Forts & treks", "note": "Maratha forts and Sahyadri climbs, best watched before your own monsoon trek.",
+      "keywords": ["fort", "trek", "gad", "killa", "waterfall"] },
+    { "id": "temples", "name": "Temples & ghats", "note": "Darshan, history and the ropeway rides up to hilltop shrines.",
+      "keywords": ["temple", "mandir", "mahadev", "devi", "gufa", "aarti", "ghat", "darshan", "church", "chaitya", "shiv"] },
+    { "id": "north", "name": "Hills & the North", "note": "Himachal trails, cable cars and Delhi's old monuments.",
+      "keywords": ["kasauli", "himachal", "delhi", "dilli", "rishikesh", "haridwar", "uttarakhand", "shimla", "manali", "meerut"] },
+    { "id": "coast", "name": "Coast & Mumbai", "note": "Weekend beach runs and city walks within a day's ride of Mumbai.",
+      "keywords": ["beach", "mumbai", "alibag", "juhu", "bandra", "gateway", "mandwa", "palghar", "dam", "garden", "nature"] }
+  ],
+  "routeTabOrder": ["forts", "temples", "coast", "north"],
+  "assign": {}
+}

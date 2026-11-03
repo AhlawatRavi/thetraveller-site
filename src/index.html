@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>theTraveller</title>
+<meta name="description" content="theTraveller (@thetravellervibe): motorcycle and car rides, Sahyadri forts, ancient temples and hidden beaches. Travel diary of a wanderer.">
+<link rel="icon" href="logo.webp" type="image/webp">
+<link rel="canonical" href="__SITE_URL__/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="theTraveller">
+<meta property="og:description" content="Travel diary of a wanderer. Ride along. Explore more. Live the vibe.">
+<meta property="og:url" content="__SITE_URL__/">
+<meta property="og:image" content="__SITE_URL__/logo.webp">
+<meta name="theme-color" content="#0a0c10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Figtree:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a rider's logbook. Hero with the most-watched trail, a ranked view-count chart, route tabs, latest uploads. Dark-first to match the channel banner. */
+:root {
+  --bg: #0a0c10;
+  --surface: #13171e;
+  --surface-2: #1b212b;
+  --line: #262e3a;
+  --fg: #eef2f7;
+  --muted: #98a2b1;
+  --blue: #3b82ff;
+  --blue-ink: #7fb0ff;
+  --gold: #f5b13d;
+  --yt: #ff0033;
+  --on-blue: #ffffff;
+  --contour: rgba(59, 130, 255, 0.10);
+  --shadow: 0 18px 50px -24px rgba(0, 0, 0, 0.8);
+  --display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Martian Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f2f4f8; --surface: #ffffff; --surface-2: #e8ecf3; --line: #d5dbe5;
+    --fg: #0c1118; --muted: #556072; --blue: #1a5fd6; --blue-ink: #1a5fd6;
+    --gold: #b06d00; --on-blue: #ffffff; --contour: rgba(26, 95, 214, 0.09);
+    --shadow: 0 18px 50px -28px rgba(20, 40, 80, 0.35);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f2f4f8; --surface: #ffffff; --surface-2: #e8ecf3; --line: #d5dbe5;
+  --fg: #0c1118; --muted: #556072; --blue: #1a5fd6; --blue-ink: #1a5fd6;
+  --gold: #b06d00; --on-blue: #ffffff; --contour: rgba(26, 95, 214, 0.09);
+  --shadow: 0 18px 50px -28px rgba(20, 40, 80, 0.35);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg);
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1160px; margin: 0 auto; }
+
+/* Header */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.top .wrap { display: flex; align-items: center; gap: 20px; padding-block: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand img { width: 42px; height: 42px; display: block; }
+.brand span { font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: -0.01em; font-variation-settings: "wdth" 80; }
+.brand b { color: var(--blue-ink); font-weight: 800; }
+.nav { display: flex; gap: 22px; margin-left: auto; font-size: 14px; font-weight: 600; }
+.nav a { text-decoration: none; color: var(--muted); }
+.nav a:hover { color: var(--fg); }
+.yt-link {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px 7px 10px; border-radius: 999px;
+  border: 1.5px solid var(--line); background: var(--surface); text-decoration: none;
+  font-family: var(--mono); font-size: 13px; font-weight: 500; white-space: nowrap;
+  transition: border-color .15s ease;
+}
+.yt-link:hover { border-color: var(--yt); }
+.yt-link svg { width: 24px; height: 17px; flex: none; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 999px;
+  font-weight: 700; font-size: 15px; text-decoration: none; white-space: nowrap;
+  transition: transform .15s ease, background .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-blue { background: var(--blue); color: var(--on-blue); }
+.btn-ghost { border: 1.5px solid var(--line); color: var(--fg); }
+.btn-ghost:hover { border-color: var(--muted); }
+.btn svg { width: 16px; height: 16px; flex: none; }
+@media (max-width: 760px) { .nav { display: none; } .yt-link { margin-left: auto; } .top .wrap { gap: 10px; } .top .btn { padding: 8px 14px; font-size: 14px; } }
+@media (max-width: 480px) { .yt-link span { display: none; } .yt-link { padding: 7px 10px; } }
+
+/* Hero */
+.hero { position: relative; padding-block: 64px 56px; }
+.hero::before {
+  content: ""; position: absolute; inset: 0 -50vw; z-index: -1; pointer-events: none;
+  background:
+    repeating-radial-gradient(ellipse 60% 48% at 78% 42%, transparent 0 26px, var(--contour) 26px 27px),
+    repeating-radial-gradient(ellipse 40% 34% at 8% 96%, transparent 0 22px, var(--contour) 22px 23px);
+  mask-image: linear-gradient(to bottom, #000 60%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent);
+}
+.hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+.hero-logo { width: clamp(120px, 14vw, 160px); height: auto; display: block; margin-bottom: 22px; transform: rotate(-4deg); filter: drop-shadow(0 12px 24px rgba(0, 0, 0, .35)); }
+.eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); display: flex; align-items: center; gap: 10px;
+}
+.eyebrow::before { content: ""; width: 28px; height: 2px; background: currentColor; }
+h1 {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(52px, 8.4vw, 104px); line-height: 0.88; letter-spacing: -0.035em;
+  font-variation-settings: "wdth" 75, "opsz" 96;
+  margin: 18px 0 22px; text-wrap: balance; text-transform: uppercase;
+}
+h1 .roam { color: var(--blue-ink); }
+h1 .roam i { font-style: normal; color: var(--gold); }
+.lede { font-size: 18px; color: var(--muted); max-width: 46ch; margin: 0 0 28px; }
+.lede strong { color: var(--fg); font-weight: 600; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.stats { display: flex; flex-wrap: wrap; gap: 14px 36px; margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line); }
+.stat b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; font-variation-settings: "wdth" 80; }
+.stat span { font-size: 13px; color: var(--muted); }
+
+.feature { display: block; text-decoration: none; position: relative; }
+.feature .frame {
+  position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 18px; overflow: hidden;
+  box-shadow: var(--shadow); border: 1px solid var(--line); transform: rotate(1.2deg);
+  transition: transform .3s ease;
+}
+.feature:hover .frame { transform: rotate(0deg) scale(1.01); }
+.feature img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.play {
+  position: absolute; inset: 0; margin: auto; width: 74px; height: 74px; border-radius: 50%;
+  background: var(--blue); color: var(--on-blue); display: grid; place-items: center;
+  box-shadow: 0 10px 30px -6px rgba(0, 0, 0, .6);
+}
+.play svg { width: 28px; height: 28px; margin-left: 4px; }
+.sticker {
+  position: absolute; top: -14px; left: -12px; z-index: 2;
+  background: var(--gold); color: #1a1204; font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase; padding: 7px 12px; border-radius: 6px; transform: rotate(-3deg);
+}
+.feature-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: 18px; flex-wrap: wrap; }
+.feature-meta h2 { font-family: var(--display); font-size: 28px; font-weight: 800; margin: 0; letter-spacing: -0.02em; font-variation-settings: "wdth" 85; }
+.coords { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+@media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; gap: 44px; } .hero { padding-block: 40px; } }
+
+/* Sections */
+section.block { padding-block: 64px; border-top: 1px solid var(--line); }
+.head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+.head h2 {
+  font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5vw, 54px); line-height: 0.95;
+  letter-spacing: -0.03em; margin: 10px 0 0; text-transform: uppercase; font-variation-settings: "wdth" 78; text-wrap: balance;
+}
+.head p { color: var(--muted); max-width: 42ch; margin: 0; }
+
+/* Most watched: ranked rows with view bars to scale */
+.chart { display: grid; gap: 10px; list-style: none; margin: 0; padding: 0; }
+.row {
+  display: grid; grid-template-columns: 40px 168px minmax(0, 1fr) auto; align-items: center; gap: 20px;
+  padding: 12px 16px 12px 12px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line);
+  text-decoration: none; transition: border-color .15s ease, background .15s ease;
+}
+.row:hover { border-color: var(--blue); background: var(--surface-2); }
+.rank { font-family: var(--display); font-size: 34px; font-weight: 800; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
+.row.first .rank { color: var(--gold); }
+.row .thumb { aspect-ratio: 16/9; border-radius: 9px; overflow: hidden; max-width: 100%; }
+.row .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.row h3 { margin: 0 0 4px; font-size: 17px; font-weight: 700; line-height: 1.3; }
+.row .place { font-size: 13px; color: var(--muted); }
+.bar { height: 6px; border-radius: 3px; background: var(--surface-2); margin-top: 10px; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--blue); border-radius: 3px; }
+.row.first .bar span { background: var(--gold); }
+.views { font-family: var(--mono); font-size: 15px; font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+.views small { display: block; font-size: 11px; color: var(--muted); font-weight: 400; }
+@media (max-width: 680px) {
+  .row { grid-template-columns: 28px 112px minmax(0, 1fr); gap: 12px; }
+  .rank { font-size: 24px; }
+  .row h3 { font-size: 15px; }
+  .views { grid-column: 3; text-align: left; font-size: 13px; margin-top: -6px; }
+  .views small { display: inline; margin-left: 4px; }
+}
+
+/* Route tabs */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+.tab {
+  font: 600 15px var(--body); color: var(--muted); background: transparent;
+  border: 1.5px solid var(--line); border-radius: 999px; padding: 9px 18px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.tab:hover { color: var(--fg); border-color: var(--muted); }
+.tab[aria-selected="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.tab .n { font-family: var(--mono); font-size: 11px; opacity: .7; }
+.panel-note { color: var(--muted); margin: -8px 0 22px; max-width: 60ch; }
+
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+.grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .grid.three { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
+
+.card { display: flex; flex-direction: column; text-decoration: none; min-width: 0; }
+.card .thumb { position: relative; aspect-ratio: 16/9; max-width: 100%; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); }
+.card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+.card:hover .thumb img { transform: scale(1.04); }
+.dur {
+  position: absolute; right: 8px; bottom: 8px; background: rgba(0, 0, 0, .78); color: #fff;
+  font-family: var(--mono); font-size: 11px; padding: 3px 6px; border-radius: 5px;
+}
+.card h3 { font-size: 17px; font-weight: 700; line-height: 1.3; margin: 14px 0 6px; text-wrap: balance; }
+.card:hover h3 { color: var(--blue-ink); }
+.card .place { font-size: 14px; color: var(--muted); margin: 0 0 10px; }
+.card .meta { margin-top: auto; display: flex; justify-content: space-between; gap: 10px; padding-top: 10px; border-top: 1px dashed var(--line); }
+.card .meta .coords { font-size: 11px; }
+.card .meta .v { font-family: var(--mono); font-size: 11px; color: var(--fg); white-space: nowrap; }
+.new { position: absolute; left: 8px; top: 8px; background: var(--blue); color: var(--on-blue); font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; padding: 4px 8px; border-radius: 5px; }
+
+/* Shorts: two rows of vertical cards */
+.shorts-group + .shorts-group { margin-top: 48px; }
+.sub-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.sub-head h3 { font-family: var(--display); font-weight: 800; font-size: 26px; margin: 0; letter-spacing: -0.02em; text-transform: uppercase; font-variation-settings: "wdth" 80; }
+.sub-head span { font-size: 14px; color: var(--muted); }
+.shorts { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; list-style: none; margin: 0; padding: 0; }
+@media (max-width: 1000px) { .shorts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .shorts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } }
+.short { display: flex; flex-direction: column; text-decoration: none; min-width: 0; }
+.short .thumb { position: relative; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--surface-2); }
+.short .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+.short:hover .thumb img { transform: scale(1.04); }
+.short .thumb::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(to top, rgba(0, 0, 0, .75), transparent); pointer-events: none; }
+.short .sv { position: absolute; left: 10px; bottom: 9px; z-index: 1; color: #fff; font-family: var(--mono); font-size: 11px; display: flex; align-items: center; gap: 5px; }
+.short .sv svg { width: 12px; height: 12px; }
+.short .badge { position: absolute; right: 8px; top: 8px; z-index: 1; width: 26px; height: 26px; border-radius: 7px; background: rgba(0, 0, 0, .55); color: #fff; display: grid; place-items: center; }
+.short .badge svg { width: 14px; height: 14px; }
+.short .rk { position: absolute; left: 8px; top: 8px; z-index: 1; min-width: 26px; height: 26px; padding: 0 6px; border-radius: 7px; background: var(--blue); color: var(--on-blue); font-family: var(--display); font-weight: 800; font-size: 16px; display: grid; place-items: center; }
+.short .rk.first { background: var(--gold); color: #1a1204; }
+.short h4 { font-size: 14px; font-weight: 600; line-height: 1.35; margin: 10px 0 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.short:hover h4 { color: var(--blue-ink); }
+
+/* Footer CTA */
+.outro { padding-block: 80px 40px; border-top: 1px solid var(--line); text-align: left; }
+.outro .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 36px; align-items: center; }
+.outro img { width: 230px; height: auto; display: block; filter: drop-shadow(0 14px 30px rgba(0, 0, 0, .35)); }
+.outro h2 {
+  font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5.4vw, 64px); line-height: .92;
+  letter-spacing: -0.03em; margin: 0 0 18px; text-transform: uppercase; font-variation-settings: "wdth" 76; text-wrap: balance;
+}
+.outro h2 span { color: var(--blue-ink); }
+.foot { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+@media (max-width: 640px) { .outro .wrap { grid-template-columns: 1fr; } .outro img { width: 170px; } }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="logo.webp" alt=""><span>the<b>Traveller</b></span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#most-watched">Most watched</a>
+      <a href="#routes">Routes</a>
+      <a href="#latest">Latest</a>
+      <a href="#shorts">Shorts</a>
+    </nav>
+    <a class="yt-link" href="https://www.youtube.com/@thetravellervibe" target="_blank" rel="noopener" aria-label="theTraveller on YouTube, @thetravellervibe">
+      <svg viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" rx="5" fill="var(--yt)"/><path d="M11 5.5v9l7.8-4.5z" fill="#fff"/></svg>
+      <span>@thetravellervibe</span>
+    </a>
+    <a class="btn btn-blue" href="https://www.youtube.com/@thetravellervibe?sub_confirmation=1" target="_blank" rel="noopener">Subscribe</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <img class="hero-logo" src="logo.webp" alt="theTraveller logo">
+        <div class="eyebrow">Travel diary of a wanderer</div>
+        <h1>Vibe.<br><span class="roam">R<i>o</i>am.</span><br>Conquer.</h1>
+        <p class="lede">Motorcycle and car rides, Sahyadri forts, ancient temples and hidden beaches. <strong>No luxury, no fancy plans.</strong> Just a traveller, a camera and an urge to explore.</p>
+        <div class="cta">
+          <a class="btn btn-blue" href="https://www.youtube.com/@thetravellervibe?sub_confirmation=1" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1-5.8 3.1z"/></svg>
+            Subscribe on YouTube
+          </a>
+          <a class="btn btn-ghost" href="#routes">Pick a route</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b id="stat-subs">–</b><span>subscribers</span></div>
+          <div class="stat"><b id="stat-videos">–</b><span>videos</span></div>
+          <div class="stat"><b id="stat-top">–</b><span>views on the top video</span></div>
+        </div>
+      </div>
+
+      <a class="feature" id="feature" href="https://www.youtube.com/@thetravellervibe" target="_blank" rel="noopener">
+        <span class="sticker" id="feature-sticker">Most watched</span>
+        <div class="frame">
+          <img id="feature-img" src="logo.webp" alt="">
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span>
+        </div>
+        <div class="feature-meta">
+          <h2 id="feature-title"></h2>
+          <span class="coords" id="feature-meta"></span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="block" id="most-watched">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">The five biggest rides</div>
+          <h2>Most watched</h2>
+        </div>
+        <p id="chart-note">Ranked by views. Bars are drawn to scale against the top video.</p>
+      </div>
+      <ol class="chart" id="chart"></ol>
+    </div>
+  </section>
+
+  <section class="block" id="routes">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">Choose your vibe</div>
+          <h2>Pick a route</h2>
+        </div>
+        <p>The best of each kind of trip, from monsoon fort climbs to evening darshan.</p>
+      </div>
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div id="panels"></div>
+    </div>
+  </section>
+
+  <section class="block" id="latest">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">Fresh off the road</div>
+          <h2>Latest uploads</h2>
+        </div>
+        <p>The three newest videos on the channel.</p>
+      </div>
+      <div class="grid three" id="latest-grid"></div>
+    </div>
+  </section>
+
+  <section class="block" id="shorts">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">The trip in under a minute</div>
+          <h2>Shorts</h2>
+        </div>
+        <p>Quick clips from the road, shot on Insta360 and phone.</p>
+      </div>
+      <div class="shorts-group">
+        <div class="sub-head"><h3>Most watched</h3><span>Ranked by views</span></div>
+        <ol class="shorts" id="shorts-top"></ol>
+      </div>
+      <div class="shorts-group">
+        <div class="sub-head"><h3>Latest</h3><span>Newest first</span></div>
+        <ol class="shorts" id="shorts-latest"></ol>
+      </div>
+      <div class="cta" style="margin-top: 36px">
+        <a class="btn btn-ghost" href="https://www.youtube.com/@thetravellervibe/shorts" target="_blank" rel="noopener">See all Shorts on YouTube</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="outro">
+    <div class="wrap">
+      <img src="logo-runner.webp" alt="theTraveller mascot running with a backpack and camera">
+      <div>
+        <h2>Ride along. Explore more. <span>Live the vibe.</span></h2>
+        <div class="cta">
+          <a class="btn btn-blue" href="https://www.youtube.com/@thetravellervibe?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a>
+          <a class="btn btn-ghost" id="all-videos" href="https://www.youtube.com/@thetravellervibe/videos" target="_blank" rel="noopener">See all videos</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap foot">
+      <span>theTraveller · youtube.com/@thetravellervibe</span>
+      <span id="updated">Updates every hour</span>
+    </div>
+  </section>
+</main>
+
+<script id="site-data" type="application/json">__SITE_DATA__</script>
+<script>
+// Everything below is drawn from the data the hourly build puts into #site-data.
+const { data, curation } = JSON.parse(document.getElementById("site-data").textContent);
+const C = curation;
+const hidden = new Set(C.hide || []);
+const uploads = data.videos.filter(v => !hidden.has(v.id));
+const videos = uploads.filter(v => !v.short);
+const shortsAll = uploads.filter(v => v.short);
+const byViews = (a, b) => b.views - a.views;
+const byDate = (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt);
+const updated = new Date(data.updatedAt);
+
+const ytVideo = id => "https://www.youtube.com/watch?v=" + id;
+const ytShort = id => "https://www.youtube.com/shorts/" + id;
+const trim = s => s.replace(/\.0$/, "");
+// Rounds down like YouTube does, so the site never shows more views than YouTube.
+const fmt = n => n >= 1e6 ? trim((Math.floor(n / 1e5) / 10).toFixed(1)) + "M"
+  : n >= 1e4 ? Math.floor(n / 1e3) + "K"
+  : n >= 1e3 ? trim((Math.floor(n / 100) / 10).toFixed(1)) + "K"
+  : String(n);
+const fmtSubs = n => n >= 1e4 ? fmt(n) : n >= 1e3 ? (Math.floor(n / 10) / 100).toFixed(2).replace(/0$/, "").replace(/\.0$/, "") + "K" : String(n);
+const fmtDur = s => {
+  if (s == null) return "";
+  const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), sec = String(s % 60).padStart(2, "0");
+  return h ? `${h}:${String(m).padStart(2, "0")}:${sec}` : `${m}:${sec}`;
+};
+const monthYear = d => new Date(d).toLocaleDateString("en-IN", { month: "short", year: "numeric", timeZone: "Asia/Kolkata" });
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+
+// YouTube titles carry lots of SEO keywords; keep the first readable phrase.
+function cleanTitle(t) {
+  const plain = t.replace(/#[\p{L}\p{N}_]+/gu, "").replace(/\s+/g, " ").trim();
+  const parts = plain.split(/\s*[|,]\s*|\s+[–—-]\s+/).map(p => p.trim()).filter(p => p.length > 2);
+  let out = parts[0] || plain;
+  if (out.length < 14 && parts[1]) out += ": " + parts[1];
+  if (out.length > 64) out = out.slice(0, 62).replace(/\s+\S*$/, "") + "…";
+  return out;
+}
+const info = v => {
+  const c = (v.short ? C.shorts : C.videos)[v.id] || {};
+  return { title: c.title || cleanTitle(v.title), place: c.place || "", coords: c.coords || "", thumb: c.thumb };
+};
+const isNew = v => updated - new Date(v.publishedAt) < 30 * 864e5;
+
+function card(v) {
+  const x = info(v);
+  return `<a class="card" href="${ytVideo(v.id)}" target="_blank" rel="noopener">
+    <div class="thumb"><img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="" loading="lazy">${isNew(v) ? '<span class="new">New</span>' : ""}<span class="dur">${fmtDur(v.duration)}</span></div>
+    <h3>${esc(x.title)}</h3>
+    ${x.place ? `<p class="place">${esc(x.place)}</p>` : ""}
+    <div class="meta"><span class="coords">${x.coords || monthYear(v.publishedAt)}</span><span class="v">${fmt(v.views)} views</span></div>
+  </a>`;
+}
+
+// Hero stats and featured video
+const top = [...videos].sort(byViews);
+const feature = top[0];
+document.getElementById("stat-subs").textContent = fmtSubs(data.channel.subscribers);
+document.getElementById("stat-videos").textContent = data.channel.videoCount;
+document.getElementById("all-videos").textContent = `See all ${data.channel.videoCount} videos`;
+if (feature) {
+  const x = info(feature);
+  document.getElementById("stat-top").textContent = fmt(feature.views);
+  document.getElementById("feature").href = ytVideo(feature.id);
+  document.getElementById("feature-sticker").textContent = `Most watched · ${fmt(feature.views)} views`;
+  const img = document.getElementById("feature-img");
+  img.onerror = () => { img.onerror = null; img.src = `https://i.ytimg.com/vi/${feature.id}/hqdefault.jpg`; };
+  img.src = `https://i.ytimg.com/vi/${feature.id}/sddefault.jpg`;
+  img.alt = x.title;
+  document.getElementById("feature-title").textContent = x.title;
+  document.getElementById("feature-meta").textContent = [x.coords || monthYear(feature.publishedAt), fmtDur(feature.duration)].filter(Boolean).join(" · ");
+  document.getElementById("chart-note").textContent = `Ranked by views. Bars are drawn to scale against ${x.title}.`;
+}
+
+// Most watched
+const top5 = top.slice(0, 5);
+document.getElementById("chart").innerHTML = top5.map((v, i) => {
+  const x = info(v);
+  return `<li><a class="row${i === 0 ? " first" : ""}" href="${ytVideo(v.id)}" target="_blank" rel="noopener">
+    <span class="rank">${i + 1}</span>
+    <span class="thumb"><img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="" loading="lazy"></span>
+    <div style="min-width:0"><h3>${esc(x.title)}</h3><span class="place">${esc([x.place, fmtDur(v.duration)].filter(Boolean).join(" · "))}</span>
+      <div class="bar"><span style="width:${(v.views / top5[0].views * 100).toFixed(1)}%"></span></div></div>
+    <span class="views">${fmt(v.views)}<small>views</small></span>
+  </a></li>`;
+}).join("");
+
+// Routes: each video goes to the first route whose keywords match its title, then the 4 most watched per route
+const routeOf = v => {
+  if (C.assign && v.id in C.assign) return C.assign[v.id];
+  const t = v.title.toLowerCase();
+  return (C.routes.find(r => r.keywords.some(k => t.includes(k.toLowerCase()))) || {}).id;
+};
+const routes = (C.routeTabOrder || C.routes.map(r => r.id)).map(id => C.routes.find(r => r.id === id)).filter(Boolean)
+  .map(r => ({ ...r, items: videos.filter(v => routeOf(v) === r.id).sort(byViews).slice(0, 4) }))
+  .filter(r => r.items.length);
+const tabs = document.getElementById("tabs");
+const panels = document.getElementById("panels");
+routes.forEach((r, i) => {
+  tabs.insertAdjacentHTML("beforeend",
+    `<button class="tab" role="tab" id="tab-${r.id}" aria-controls="panel-${r.id}" aria-selected="${i === 0}">${esc(r.name)}<span class="n">${r.items.length}</span></button>`);
+  panels.insertAdjacentHTML("beforeend",
+    `<div role="tabpanel" id="panel-${r.id}" aria-labelledby="tab-${r.id}" ${i === 0 ? "" : "hidden"}>
+      <p class="panel-note">${esc(r.note)}</p>
+      <div class="grid">${r.items.map(card).join("")}</div>
+    </div>`);
+});
+function select(id) {
+  routes.forEach(r => {
+    const on = r.id === id;
+    document.getElementById("tab-" + r.id).setAttribute("aria-selected", on);
+    document.getElementById("panel-" + r.id).hidden = !on;
+  });
+  try { localStorage.setItem("ttv-route", id); } catch (e) {}
+}
+tabs.addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) select(b.id.slice(4)); });
+try { const saved = localStorage.getItem("ttv-route"); if (saved && routes.some(r => r.id === saved)) select(saved); } catch (e) {}
+
+// Latest uploads
+document.getElementById("latest-grid").innerHTML = [...videos].sort(byDate).slice(0, 3).map(card).join("");
+
+// Shorts
+const eye = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 5C6.5 5 2.7 9.4 1.5 12c1.2 2.6 5 7 10.5 7s9.3-4.4 10.5-7C21.3 9.4 17.5 5 12 5zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg>';
+const bolt = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>';
+function short(v, rank) {
+  const x = info(v);
+  return `<li><a class="short" href="${ytShort(v.id)}" target="_blank" rel="noopener">
+    <div class="thumb"><img src="https://i.ytimg.com/vi/${v.id}/${x.thumb || "oar2"}.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${v.id}/frame0.jpg'">
+      ${rank ? `<span class="rk${rank === 1 ? " first" : ""}">${rank}</span>` : ""}
+      <span class="badge" title="Short">${bolt}</span>
+      <span class="sv">${eye}${fmt(v.views)} views</span></div>
+    <h4>${esc(x.title)}</h4>
+  </a></li>`;
+}
+document.getElementById("shorts-top").innerHTML = [...shortsAll].sort(byViews).slice(0, 6).map((v, i) => short(v, i + 1)).join("");
+document.getElementById("shorts-latest").innerHTML = [...shortsAll].sort(byDate).slice(0, 6).map(v => short(v)).join("");
+if (!shortsAll.length) document.getElementById("shorts").hidden = true;
+
+// Footer
+document.getElementById("updated").textContent = (data.source === "youtube" ? "Updated " : "Numbers from ") +
+  updated.toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit", timeZone: "Asia/Kolkata" }) + " IST";
+</script>
+</body>
+</html>
