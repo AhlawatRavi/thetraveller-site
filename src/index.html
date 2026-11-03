@@ -61,6 +61,7 @@ img { max-width: 100%; }
 [hidden] { display: none !important; }
 body {
   margin: 0;
+  overflow-x: clip;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background: var(--bg);
@@ -422,6 +423,8 @@ section.block { padding-block: 64px; border-top: 1px solid var(--line); }
 <script id="site-data" type="application/json">__SITE_DATA__</script>
 <script>
 // Everything below is drawn from the data the hourly build puts into #site-data.
+// Wrapped in a function so names like "top" don't clash with browser globals.
+(() => {
 const { data, curation } = JSON.parse(document.getElementById("site-data").textContent);
 const C = curation;
 const hidden = new Set(C.hide || []);
@@ -475,8 +478,8 @@ function card(v) {
 }
 
 // Hero stats and featured video
-const top = [...videos].sort(byViews);
-const feature = top[0];
+const ranked = [...videos].sort(byViews);
+const feature = ranked[0];
 document.getElementById("stat-subs").textContent = fmtSubs(data.channel.subscribers);
 document.getElementById("stat-videos").textContent = data.channel.videoCount;
 document.getElementById("all-videos").textContent = `See all ${data.channel.videoCount} videos`;
@@ -495,7 +498,7 @@ if (feature) {
 }
 
 // Most watched
-const top5 = top.slice(0, 5);
+const top5 = ranked.slice(0, 5);
 document.getElementById("chart").innerHTML = top5.map((v, i) => {
   const x = info(v);
   return `<li><a class="row${i === 0 ? " first" : ""}" href="${ytVideo(v.id)}" target="_blank" rel="noopener">
@@ -561,6 +564,7 @@ if (!shortsAll.length) document.getElementById("shorts").hidden = true;
 // Footer
 document.getElementById("updated").textContent = (data.source === "youtube" ? "Updated " : "Numbers from ") +
   updated.toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit", timeZone: "Asia/Kolkata" }) + " IST";
+})();
 </script>
 </body>
 </html>
